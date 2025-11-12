@@ -1,0 +1,17 @@
+trigger:
+- main
+
+pool: robo
+
+
+steps:
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+    backendServiceArm: 'Framework'
+    backendAzureRmResourceGroupName: 'todoapprg1'
+    backendAzureRmStorageAccountName: 'stgtodoaap123'
+    backendAzureRmContainerName: 'jitu'
+    backendAzureRmKey: 'terraform.tfstate'
