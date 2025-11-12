@@ -76,6 +76,24 @@ nsg = {
     name                = "todo-nsg"
     location            = "west us"
     resource_group_name = "jitu-rg"
+    
+    tags = {
+      environment = "dev"
+    }
+
+    security_rule = {
+      sr1 = {
+        name                       = "test123"
+        priority                   = 100
+        direction                  = "Inbound"
+        access                     = "Allow"
+        protocol                   = "Tcp"
+        source_port_range          = "*"
+        destination_port_range     = "*"
+        source_address_prefix      = "*"
+        destination_address_prefix = "*"
+      }
+    }
   }
 }
 
@@ -88,5 +106,66 @@ todo-keyvault = {
     tenant_id                   = "a76f3cd4-c56e-4fd0-b33d-0e4ce344efae"
     soft_delete_retention_days  = 7
     purge_protection_enabled    = false
+  }
+}
+
+stgs = {
+  stg1 = {
+    name                     = "tododevstg1"
+    resource_group_name      = "jitu-rg"
+    location                 = "west us"
+    account_tier             = "Standard"
+    account_replication_type = "GRS"
+    tags = {
+      cost_center = 123456
+      environment = "dev"
+    }
+  }
+}
+
+mssql_todo = {
+  msql1 = {
+    name                         = "mssqlserver"
+    resource_group_name          = "jitu-rg"
+    location                     = "west us"
+    version                      = "12.0"
+    administrator_login          = "mssqladminuser"
+    administrator_login_password = "mssql@123"
+    minimum_tls_version          = "1.2"
+    tags = {
+      environment = "dev"
+    }
+  }
+}
+
+todo_db = {
+  sqldb1 = {
+    name = "todoapp-db"
+
+    collation    = "SQL_Latin1_General_CP1_CI_AS"
+    license_type = "LicenseIncluded"
+    max_size_gb  = 2
+    sku_name     = "S0"
+    enclave_type = "VBS"
+
+    tags = {
+      project = "todoapp"
+      owner   = "jitendra"
+      env     = "dev"
+    }
+  }
+}
+
+secrets = {
+  kvs1 = {
+    name  = "vm-username"
+    value = "adminuser"
+
+  }
+
+  kvs2 = {
+    name  = "vm-password1"
+    value = "adminuser@123"
+
   }
 }
