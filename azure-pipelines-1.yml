@@ -3,7 +3,6 @@ trigger:
 
 pool: robo
 
-
 steps:
 - task: TerraformTask@5
   inputs:
@@ -15,3 +14,11 @@ steps:
     backendAzureRmStorageAccountName: 'stgtodoaap123'
     backendAzureRmContainerName: 'jitu'
     backendAzureRmKey: 'terraform.tfstate'
+
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+    environmentServiceNameAzureRM: 'Framework'
+
