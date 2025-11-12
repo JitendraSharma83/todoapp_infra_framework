@@ -1,19 +1,15 @@
 trigger:
 - main
 
-pool:robo
+pool: robo
+
 
 steps:
-- task: TerraformInstaller@1
+- task: AzurePowerShell@5
   inputs:
-    terraformVersion: 'latest'
-
-- task: TerraformTask@5
-  inputs:
-    provider: 'azurerm'
-    command: 'init'
-    backendServiceArm: 'framework-service connection'
-    backendAzureRmResourceGroupName: 'todoapprg1'
-    backendAzureRmStorageAccountName: 'stgtodoaap123'
-    backendAzureRmContainerName: 'jitu'
-    backendAzureRmKey: 'terraform.tfstate'
+    azureSubscription: 'framework-service connection'
+    ScriptType: 'InlineScript'
+    Inline: |
+      cd az login
+      terraform init
+    azurePowerShellVersion: 'LatestVersion'
