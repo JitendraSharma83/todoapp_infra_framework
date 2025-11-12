@@ -1,0 +1,19 @@
+trigger:
+- main
+
+pool:robo
+
+steps:
+- task: TerraformInstaller@1
+  inputs:
+    terraformVersion: 'latest'
+
+- task: TerraformTask@5
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    backendServiceArm: 'framework-service connection'
+    backendAzureRmResourceGroupName: 'todoapprg1'
+    backendAzureRmStorageAccountName: 'stgtodoaap123'
+    backendAzureRmContainerName: 'jitu'
+    backendAzureRmKey: 'terraform.tfstate'
