@@ -34,7 +34,7 @@ steps:
 # 🔹 Step 3: Terraform Apply (Conditional)
 - task: TerraformTask@5
   displayName: 'Terraform Apply (only for prod)'
-  condition: and(succeeded(), eq(variables['Environment'], 'prod'))
+  condition: and(succeeded(), eq(variables['Environment'], 'dev'))
   inputs:
     provider: 'azurerm'
     command: 'apply'
