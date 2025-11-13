@@ -1,10 +1,17 @@
 trigger:
 - main
 
-pool: robo
+variables:
+  Environment: 'dev'   # change this in pipeline UI or YAML (prod/dev)
+
+pool:
+  name: robo
 
 steps:
+
+# 🔹 Step 1: Terraform Init
 - task: TerraformTask@5
+  displayName: 'Terraform Init'
   inputs:
     provider: 'azurerm'
     command: 'init'
@@ -15,10 +22,25 @@ steps:
     backendAzureRmContainerName: 'jitu'
     backendAzureRmKey: 'terraform.tfstate'
 
+# 🔹 Step 2: Terraform Plan
 - task: TerraformTask@5
+  displayName: 'Terraform Plan'
   inputs:
     provider: 'azurerm'
     command: 'plan'
     workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
     environmentServiceNameAzureRM: 'Framework'
+
+# 🔹 Step 3: Terraform Apply (Conditional)
+- task: TerraformTask@5
+  displayName: 'Terraform Apply (only for prod)'
+  condition: and(succeeded(), eq(variables['Environment'], 'prod'))
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/environments/dev'
+    environmentServiceNameAzureRM: 'Framework'
+
+
+
 
