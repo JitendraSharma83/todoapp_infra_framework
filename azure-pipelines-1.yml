@@ -1,5 +1,5 @@
 trigger:
-- main
+- jitu
 
 variables:
   Environment: 'dev'   # change this in pipeline UI or YAML (prod/dev)
